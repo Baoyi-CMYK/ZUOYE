@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医院挂号系统</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">🏥 医院挂号系统</h1>
+            <nav class="nav" id="navBar">
+                <a href="#home" onclick="showPage('home')">首页</a>
+                <a href="#login" onclick="showPage('login')">登录</a>
+                <a href="#register" onclick="showPage('register')">注册</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div id="pageContent">
+            <div id="homePage" class="page">
+                <h2 class="page-title" id="welcomeTitle">欢迎使用医院挂号系统</h2>
+                <div class="card-grid">
+                    <div class="card" onclick="showPage('login')">
+                        <div class="card-title">🕐 登录系统</div>
+                        <p>登录后使用所有功能</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="showPage('login')">登录系统</button>
+                </div>
+            </div>
+
+            <div id="loginPage" class="page hidden" style="max-width: 400px; margin: 2rem auto;">
+                <h2 class="page-title">用户登录</h2>
+                <div id="loginAlert"></div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="username" placeholder="请输入用户名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" name="password" placeholder="请输入密码" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">登录</button>
+                </form>
+                <p style="margin-top: 1rem; text-align: center;">
+                    还没有账号？<a href="#register" onclick="showPage('register'); return false;">立即注册</a>
+                </p>
+            </div>
+
+            <div id="registerPage" class="page hidden" style="max-width: 400px; margin: 2rem auto;">
+                <h2 class="page-title">用户注册</h2>
+                <div id="registerAlert"></div>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="username" placeholder="请输入用户名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" name="password" placeholder="请输入密码" required>
+                    </div>
+                    <div class="form-group">
+                        <label>真实姓名</label>
+                        <input type="text" name="real_name" placeholder="请输入真实姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>身份证号</label>
+                        <input type="text" name="id_card" placeholder="请输入身份证号">
+                    </div>
+                    <div class="form-group">
+                        <label>手机号</label>
+                        <input type="tel" name="phone" placeholder="请输入手机号">
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" name="email" placeholder="请输入邮箱">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">注册</button>
+                </form>
+                <p style="margin-top: 1rem; text-align: center;">
+                    已有账号？<a href="#login" onclick="showPage('login'); return false;">立即登录</a>
+                </p>
+            </div>
+
+            <div id="departmentsPage" class="page hidden">
+                <h2 class="page-title">科室管理</h2>
+                <button class="btn btn-primary" onclick="showPage('addDept')">添加科室</button>
+                <div id="deptAlert"></div>
+                <div class="card-grid" id="deptsGrid"></div>
+            </div>
+
+            <div id="addDeptPage" class="page hidden" style="max-width: 400px; margin: 2rem auto;">
+                <h2 class="page-title">添加科室</h2>
+                <form id="addDeptForm">
+                    <div class="form-group">
+                        <label>科室名称</label>
+                        <input type="text" name="name" placeholder="请输入科室名称" required>
+                    </div>
+                    <div class="form-group">
+                        <label>科室代码</label>
+                        <input type="text" name="code" placeholder="请输入科室代码" required>
+                    </div>
+                    <div class="form-group">
+                        <label>科室描述</label>
+                        <input type="text" name="description" placeholder="请输入科室描述">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">添加</button>
+                </form>
+            </div>
+
+            <div id="doctorsPage" class="page hidden">
+                <h2 class="page-title">医生管理</h2>
+                <button class="btn btn-primary" onclick="showPage('addDoctor')">添加医生</button>
+                <select id="deptFilter" onchange="loadDoctors()" style="padding: 0.5rem; margin: 1rem 0;">
+                    <option value="">全部科室</option>
+                </select>
+                <div id="doctorAlert"></div>
+                <div class="card-grid" id="doctorsGrid"></div>
+            </div>
+
+            <div id="addDoctorPage" class="page hidden" style="max-width: 400px; margin: 2rem auto;">
+                <h2 class="page-title">添加医生</h2>
+                <form id="addDoctorForm">
+                    <div class="form-group">
+                        <label>所属科室</label>
+                        <select name="department_id" id="doctorDeptSelect" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>职称</label>
+                        <input type="text" name="title" placeholder="如：主任医师" required>
+                    </div>
+                    <div class="form-group">
+                        <label>专长</label>
+                        <input type="text" name="specialty" placeholder="请输入医生专长">
+                    </div>
+                    <div class="form-group">
+                        <label>简介</label>
+                        <input type="text" name="intro" placeholder="请输入医生简介">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">添加</button>
+                </form>
+            </div>
+
+            <div id="schedulesPage" class="page hidden">
+                <h2 class="page-title">排班管理</h2>
+                <button class="btn btn-primary" onclick="showPage('addSchedule')">添加排班</button>
+                <select id="scheduleDeptFilter" onchange="loadDoctorsForSchedule()" style="padding: 0.5rem; margin: 1rem 0;">
+                    <option value="">全部科室</option>
+                </select>
+                <select id="scheduleDoctorFilter" onchange="loadSchedules()" style="padding: 0.5rem; margin: 1rem 0;">
+                    <option value="">全部医生</option>
+                </select>
+                <div id="scheduleAlert"></div>
+                <div class="card-grid" id="schedulesGrid"></div>
+            </div>
+
+            <div id="addSchedulePage" class="page hidden" style="max-width: 400px; margin: 2rem auto;">
+                <h2 class="page-title">添加排班</h2>
+                <form id="addScheduleForm">
+                    <div class="form-group">
+                        <label>选择科室</label>
+                        <select name="department_id" id="scheduleDeptSelect" onchange="loadDoctorsForScheduleSelect()" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>选择医生</label>
+                        <select name="doctor_id" id="scheduleDoctorSelect" required>
+                            <option value="">请先选择科室</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>日期</label>
+                        <input type="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>时段</label>
+                        <select name="time_period" required>
+                            <option value="08:00-08:30">08:00-08:30</option>
+                            <option value="08:30-09:00">08:30-09:00</option>
+                            <option value="09:00-09:30">09:00-09:30</option>
+                            <option value="09:30-10:00">09:30-10:00</option>
+                            <option value="10:00-10:30">10:00-10:30</option>
+                            <option value="10:30-11:00">10:30-11:00</option>
+                            <option value="11:00-11:30">11:00-11:30</option>
+                            <option value="11:30-12:00">11:30-12:00</option>
+                            <option value="13:00-13:30">13:00-13:30</option>
+                            <option value="13:30-14:00">13:30-14:00</option>
+                            <option value="14:00-14:30">14:00-14:30</option>
+                            <option value="14:30-15:00">14:30-15:00</option>
+                            <option value="15:00-15:30">15:00-15:30</option>
+                            <option value="15:30-16:00">15:30-16:00</option>
+                            <option value="16:00-16:30">16:00-16:30</option>
+                            <option value="16:30-17:00">16:30-17:00</option>
+                            <option value="17:00-17:30">17:00-17:30</option>
+                            <option value="17:30-18:00">17:30-18:00</option>
+                            <option value="18:00-18:30">18:00-18:30</option>
+                            <option value="18:30-19:00">18:30-19:00</option>
+                            <option value="19:00-19:30">19:00-19:30</option>
+                            <option value="19:30-20:00">19:30-20:00</option>
+                            <option value="20:00-20:30">20:00-20:30</option>
+                            <option value="20:30-21:00">20:30-21:00</option>
+                            <option value="21:00-21:30">21:00-21:30</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>总号源数</label>
+                        <input type="number" name="total_slots" value="20" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">添加</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
