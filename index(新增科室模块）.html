@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医院挂号系统</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">🏥 医院挂号系统</h1>
+            <nav class="nav" id="navBar">
+                <a href="#home" onclick="showPage('home')">首页</a>
+                <a href="#login" onclick="showPage('login')">登录</a>
+                <a href="#register" onclick="showPage('register')">注册</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div id="pageContent">
+            <div id="homePage" class="page">
+                <h2 class="page-title" id="welcomeTitle">欢迎使用医院挂号系统</h2>
+                <div class="card-grid">
+                    <div class="card" onclick="showPage('login')">
+                        <div class="card-title">🕐 登录系统</div>
+                        <p>登录后使用所有功能</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="showPage('login')">登录系统</button>
+                </div>
+            </div>
+
+            <div id="loginPage" class="page hidden" style="max-width: 400px; margin: 2rem auto;">
+                <h2 class="page-title">用户登录</h2>
+                <div id="loginAlert"></div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="username" placeholder="请输入用户名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" name="password" placeholder="请输入密码" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">登录</button>
+                </form>
+                <p style="margin-top: 1rem; text-align: center;">
+                    还没有账号？<a href="#register" onclick="showPage('register'); return false;">立即注册</a>
+                </p>
+                <div class="card" style="margin-top: 1rem; border: 1px solid #eee;">
+                    <p><strong>测试账号:</strong></p>
+                    <p>用户名: admin</p>
+                    <p>密码: admin123</p>
+                </div>
+            </div>
+
+            <div id="registerPage" class="page hidden" style="max-width: 400px; margin: 2rem auto;">
+                <h2 class="page-title">用户注册</h2>
+                <div id="registerAlert"></div>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="username" placeholder="请输入用户名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" name="password" placeholder="请输入密码" required>
+                    </div>
+                    <div class="form-group">
+                        <label>真实姓名</label>
+                        <input type="text" name="real_name" placeholder="请输入真实姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>身份证号</label>
+                        <input type="text" name="id_card" placeholder="请输入身份证号">
+                    </div>
+                    <div class="form-group">
+                        <label>手机号</label>
+                        <input type="tel" name="phone" placeholder="请输入手机号">
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" name="email" placeholder="请输入邮箱">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">注册</button>
+                </form>
+                <p style="margin-top: 1rem; text-align: center;">
+                    已有账号？<a href="#login" onclick="showPage('login'); return false;">立即登录</a>
+                </p>
+            </div>
+
+            <div id="departmentsPage" class="page hidden">
+                <h2 class="page-title">科室管理</h2>
+                <button class="btn btn-primary" onclick="showAddDeptForm()">添加科室</button>
+                <div id="deptAlert"></div>
+                <div class="card-grid" id="deptsGrid"></div>
+            </div>
+
+            <div id="addDeptPage" class="page hidden" style="max-width: 400px; margin: 2rem auto;">
+                <h2 class="page-title">添加科室</h2>
+                <form id="addDeptForm">
+                    <div class="form-group">
+                        <label>科室名称</label>
+                        <input type="text" name="name" placeholder="请输入科室名称" required>
+                    </div>
+                    <div class="form-group">
+                        <label>科室代码</label>
+                        <input type="text" name="code" placeholder="请输入科室代码" required>
+                    </div>
+                    <div class="form-group">
+                        <label>科室描述</label>
+                        <input type="text" name="description" placeholder="请输入科室描述">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">添加</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
